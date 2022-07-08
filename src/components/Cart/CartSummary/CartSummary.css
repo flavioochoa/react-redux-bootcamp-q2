@@ -1,0 +1,31 @@
+.cart-summary {
+  display: flex;
+  flex-direction: column;
+  margin-left: 15px;
+  background-color: rgb(245, 245, 245);
+  padding: 32px;
+}
+
+.cart-summary-title {
+  font-weight: bold;
+}
+
+.cart-summary-number-of-items {
+  font-weight: bold;
+  padding: 5px 0px 5px 0;
+}
+
+.cart-summary-total {
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  padding: 5px 0px 10px 0;
+}
+
+.cart-summary-total > span {
+  padding-bottom: 10px;
+}
+
+.cart-summary-checkout {
+  padding-bottom: 10px;
+}
