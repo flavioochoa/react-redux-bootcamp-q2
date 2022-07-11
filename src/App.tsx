@@ -6,6 +6,8 @@ import React from "react";
 import store from "./stores/store";
 
 export const App: FunctionComponent = () => {
+  console.log(process.env.REACT_APP_WIZE_STORE_API_KEY);
+
   return (
     <Provider store={store}>
       <GlobalStyle />
