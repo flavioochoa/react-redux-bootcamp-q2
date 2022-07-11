@@ -1,0 +1,24 @@
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 150px;
+}
+
+.login-data-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 500px;
+  background-color: #fdeded;
+  padding: 70px;
+}
+
+.padding-10 {
+  padding: 10px 0 10px 0;
+}
+
+.width-100 {
+  width: 100%;
+}

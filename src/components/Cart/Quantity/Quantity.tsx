@@ -1,16 +1,32 @@
 import "./Quantity.css";
 
-import { CardProduct } from "../CartInterfaces";
+import { Button } from "../../Common/Button/Button";
+import { CartProduct } from "../CartInterfaces";
+import { useCart } from "../../../hooks/useCart";
 
-export const Quantity: React.FC<CardProduct> = (cardProduct: CardProduct) => {
+export const Quantity: React.FC<CartProduct> = (cartProduct: CartProduct) => {
+  const { changeProductQuantity, removeFromCart } = useCart();
+
+  const { id, quantity } = cartProduct;
+
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //TODO: dispatch action to update cuantity
-    console.log(e.target.value);
+    const quantity = parseInt(e.target.value);
+    changeProductQuantity({ quantity, id });
+  };
+
+  const remove = () => {
+    removeFromCart(cartProduct.id);
   };
 
   return (
     <div className="product-quantity-container">
-      <input value={cardProduct.quantity} onChange={onChange} type="number" />
+      <input
+        value={isNaN(quantity) ? "" : quantity}
+        onChange={onChange}
+        type="number"
+        min="1"
+      />
+      <Button label="Remove" onClick={remove} color="error" />
     </div>
   );
 };

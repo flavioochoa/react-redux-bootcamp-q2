@@ -1,10 +1,10 @@
 import "./ProductDetails.css";
 
-import { CardProduct } from "../CartInterfaces";
+import { CartProduct } from "../CartInterfaces";
 import { useGetValue } from "../../../hooks/useGetValue";
 
-export const ProductDetails: React.FC<CardProduct> = (
-  cardProduct: CardProduct
+export const ProductDetails: React.FC<CartProduct> = (
+  cartProduct: CartProduct
 ) => {
   const { getValueAt } = useGetValue();
 
@@ -13,13 +13,13 @@ export const ProductDetails: React.FC<CardProduct> = (
       <div className="product-details-image-container">
         <img
           className="product-details-image"
-          src={getValueAt<string>(cardProduct.images, 0)}
-          alt={cardProduct.description}
+          src={getValueAt<string>(cartProduct.images, 0)}
+          alt={cartProduct.description}
         />
       </div>
       <div className="product-details-name-code">
-        <span>{cardProduct.name}</span>
-        <span>Product code: {cardProduct.id}</span>
+        <span>{cartProduct.name}</span>
+        <span>Product code: {cartProduct.id}</span>
       </div>
     </div>
   );

@@ -6,9 +6,15 @@ export const Button: React.FC<ButtonProps> = ({
   onClick,
   label,
   className,
+  color,
 }: ButtonProps) => {
   return (
-    <MaterialButton onClick={onClick} className={className} variant="outlined">
+    <MaterialButton
+      onClick={onClick}
+      className={className}
+      variant="outlined"
+      color={color}
+    >
       {label}
     </MaterialButton>
   );

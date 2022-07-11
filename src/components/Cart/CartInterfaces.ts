@@ -1,11 +1,11 @@
 import { Item } from "../../models/Products";
 
-export interface CardProduct extends Item {
+export interface CartProduct extends Item {
   quantity: number;
 }
 
-export interface CardProducts {
-  items: Array<CardProduct>;
+export interface CartProducts {
+  items: Array<CartProduct>;
 }
 
 export interface SummaryValues {
@@ -14,5 +14,10 @@ export interface SummaryValues {
 }
 
 export interface CartSummaryProps {
-  selectedProducts: CardProducts;
+  cart: CartProducts;
+}
+
+export interface ChangeQuantityModel {
+  id: number;
+  quantity: number;
 }

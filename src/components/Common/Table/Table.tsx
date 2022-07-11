@@ -21,7 +21,7 @@ export const Table = <T extends WithId>({ config }: TableProps<T>) => {
               {columns.map((item) => {
                 return (
                   <td key={`${row.id}.td.${item.headerName}`}>
-                    {item.renderCell(row)}
+                    {item.renderCell({ row })}
                   </td>
                 );
               })}

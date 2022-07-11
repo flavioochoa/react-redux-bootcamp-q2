@@ -6,12 +6,10 @@ import React from "react";
 import { moneyFormatter } from "../../../utils/utils";
 import { useCart } from "../../../hooks/useCart";
 
-export const CartSummary: React.FC<CartSummaryProps> = ({
-  selectedProducts,
-}) => {
+export const CartSummary: React.FC<CartSummaryProps> = ({ cart }) => {
   const { getSummaryValues, checkout } = useCart();
 
-  const { totalItems, total } = getSummaryValues(selectedProducts);
+  const { totalItems, total } = getSummaryValues(cart);
 
   return (
     <div>

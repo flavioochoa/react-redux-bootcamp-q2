@@ -1,13 +1,13 @@
 import "./Total.css";
 
-import { CardProduct } from "../CartInterfaces";
+import { CartProduct } from "../CartInterfaces";
 import { moneyFormatter } from "../../../utils/utils";
 import { useSummaryValues } from "../../../hooks/useSummaryValues";
 
-export const Total: React.FC<CardProduct> = (cardProduct: CardProduct) => {
+export const Total: React.FC<CartProduct> = (cartProduct: CartProduct) => {
   const { getTotalForCurrentItem } = useSummaryValues();
 
-  const { totalForCurrentItem } = getTotalForCurrentItem(cardProduct);
+  const { totalForCurrentItem } = getTotalForCurrentItem(cartProduct);
 
   return (
     <div className="product-total-container">

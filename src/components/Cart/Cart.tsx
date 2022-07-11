@@ -1,22 +1,22 @@
 import "./Cart.css";
 
-import React, { useEffect } from "react";
-
+import { Button } from "../Common/Button/Button";
 import { CartSummary } from "./CartSummary/CartSummary";
+import React from "react";
 import { Table } from "../Common/Table/Table";
 import { columns } from "./CartTableConfig";
 import { useCart } from "../../hooks/useCart";
 
 export const Cart: React.FC = () => {
-  const { selectedProducts, getRandomProducts } = useCart();
+  const { cart, getRandomProducts } = useCart();
 
-  useEffect(() => {
-    getRandomProducts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  if (!selectedProducts.items.length) {
-    return <>There's no items in your cart :(</>;
+  if (!cart.items.length) {
+    return (
+      <div className="cart-no-items">
+        <span>There's no items in your cart :(</span>
+        <Button label="Add random products" onClick={getRandomProducts} />
+      </div>
+    );
   }
 
   return (
@@ -27,9 +27,9 @@ export const Cart: React.FC = () => {
         </div>
         <hr />
         <div className="cart-products-summary-container">
-          <Table config={{ data: selectedProducts.items, columns }} />
+          <Table config={{ data: cart.items, columns }} />
 
-          <CartSummary selectedProducts={selectedProducts} />
+          <CartSummary cart={cart} />
         </div>
       </div>
     </div>

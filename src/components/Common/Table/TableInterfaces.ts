@@ -1,6 +1,10 @@
+export interface RenderCellParams<T> {
+  row: T;
+}
+
 export interface TableColumns<T> {
   headerName: string;
-  renderCell: (row: T) => React.ReactNode;
+  renderCell: (params: RenderCellParams<T>) => React.ReactNode;
 }
 
 export interface WithId {
