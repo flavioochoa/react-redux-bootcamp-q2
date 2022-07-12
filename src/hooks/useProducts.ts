@@ -1,3 +1,4 @@
+import { Item } from "../models/Products";
 import { fetchProducts } from "../stores/features/ProductSlice";
 import { useAppState } from "./useAppState";
 import { useMessages } from "../components/Common/Messages/useMessages";
@@ -18,5 +19,17 @@ export const useProducts = () => {
     }
   };
 
-  return { fetch, products, loading };
+  const findProductById = (id: number): Item | undefined => {
+    if (!products) {
+      return undefined;
+    }
+
+    const result = products.items.find((item) => {
+      return item.id === id;
+    });
+
+    return result;
+  };
+
+  return { fetch, products, loading, findProductById };
 };

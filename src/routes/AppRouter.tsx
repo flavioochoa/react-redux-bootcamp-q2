@@ -5,6 +5,7 @@ import {
   LOGIN,
   ORDER_COMPLETE,
   PRODUCTS,
+  PRODUCT_DETAILS,
 } from "../data/Constants";
 import {
   Redirect,
@@ -19,6 +20,7 @@ import { Header } from "../components/Header";
 import { HomePage } from "../pages/Home";
 import { LoginPage } from "../pages/Login";
 import { OrderFullfilledPage } from "../pages/OrderFullfilled";
+import { ProductDetailsPage } from "../pages/ProductDetails";
 import { ProductsPage } from "../pages/Products";
 import React from "react";
 import { SecuredRoute } from "./SecureRoute";
@@ -55,6 +57,11 @@ export const AppRouter = () => {
           exact
           path={FAVORITES}
           render={() => renderSecuredRoute(FavoritesPage)}
+        />
+        <Route
+          exact
+          path={PRODUCT_DETAILS}
+          render={() => renderSecuredRoute(ProductDetailsPage)}
         />
         <Route path={LOGIN}>
           <LoginPage />

@@ -8,3 +8,4 @@ export const PRODUCTS = "/products";
 export const CART = "/cart";
 export const ORDER_COMPLETE = "/order-complete";
 export const FAVORITES = "/favorites";
+export const PRODUCT_DETAILS = "/product/:id";
