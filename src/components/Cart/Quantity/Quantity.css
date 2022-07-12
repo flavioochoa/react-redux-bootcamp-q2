@@ -1,0 +1,14 @@
+.product-quantity-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  max-width: 85px;
+}
+
+.product-quantity-container > input,
+.product-quantity-container > button {
+  padding: 0.2em;
+  box-sizing: border-box;
+  width: 100%;
+  margin-bottom: 5px;
+}

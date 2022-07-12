@@ -5,17 +5,14 @@ import { Paper } from "@mui/material";
 import { Product } from "./Product";
 import { ProductProps } from "./ProductInterfaces";
 import React from "react";
+import { useCart } from "../../hooks/useCart";
 
 export const ProductContainer: React.FC<ProductProps> = (
   props: ProductProps
 ) => {
   const { product } = props;
 
-  const addToCart = () => {
-    // TODO: add dispatch to save it in store
-    console.log(product);
-    alert("In progress add to cart");
-  };
+  const { addToCart } = useCart();
 
   return (
     <Paper elevation={6} key={product.id}>
@@ -23,7 +20,7 @@ export const ProductContainer: React.FC<ProductProps> = (
         <Product product={product} />
       </div>
       <div className="add-to-cart-button-container">
-        <Button label="Add to Cart" onClick={addToCart} />
+        <Button label="Add to Cart" onClick={() => addToCart(product)} />
       </div>
     </Paper>
   );

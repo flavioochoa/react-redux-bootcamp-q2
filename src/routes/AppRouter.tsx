@@ -1,29 +1,45 @@
-import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import {
+  Redirect,
+  Route,
+  BrowserRouter as Router,
+  Switch,
+} from "react-router-dom";
 
-import { Cart } from "../pages/Cart";
+import { CartPage } from "../pages/Cart";
 import { Header } from "../components/Header";
-import { Home } from "../pages/Home";
-import { Login } from "../pages/Login";
-import { Products } from "../pages/Products";
+import { HomePage } from "../pages/Home";
+import { LoginPage } from "../pages/Login";
+import { ProductsPage } from "../pages/Products";
 import React from "react";
+import { SecuredRoute } from "./SecureRoute";
+import { useLogin } from "../hooks/useLogin";
 
 export const AppRouter = () => {
+  const { loginState } = useLogin();
+
+  const renderSecuredRoute = (Component: React.FC) => {
+    return (
+      <SecuredRoute isLoggedIn={loginState.isLoggedIn}>
+        <Component />
+      </SecuredRoute>
+    );
+  };
+
   return (
     <Router>
       <Header />
       <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
-        <Route path="/products">
-          <Products />
-        </Route>
-        <Route path="/cart">
-          <Cart />
-        </Route>
+        <Route exact path="/" render={() => renderSecuredRoute(HomePage)} />
+        <Route
+          exact
+          path="/products"
+          render={() => renderSecuredRoute(ProductsPage)}
+        />
+        <Route exact path="/cart" render={() => renderSecuredRoute(CartPage)} />
         <Route path="/login">
-          <Login />
+          <LoginPage />
         </Route>
+        <Redirect to="/" />
       </Switch>
     </Router>
   );

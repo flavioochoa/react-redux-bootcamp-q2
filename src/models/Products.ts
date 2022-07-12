@@ -11,13 +11,13 @@ export interface Products {
   items: Item[];
 }
 
-export interface Item2 {
+export interface Category {
   id: number;
   name: string;
 }
 
 export interface Categories {
-  items: Item2[];
+  items: Category[];
 }
 
 export interface Data {
