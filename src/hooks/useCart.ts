@@ -1,47 +1,29 @@
 import {
-  CartProduct,
+  CartProducts,
   ChangeQuantityModel,
 } from "../components/Cart/CartInterfaces";
-import { Item, ProductResponse } from "../models/Products";
-import { add, changeQuantity, remove, set } from "../stores/features/CartSlice";
+import {
+  add,
+  changeQuantity,
+  postOrder,
+  remove,
+  restart,
+} from "../stores/features/CartSlice";
 
-import data from "../utils/stub/products.stub.json";
-import { mockRequest } from "../utils/mockRequest";
+import { Item } from "../models/Products";
 import { useAppState } from "./useAppState";
+import { useMessages } from "../components/Common/Messages/useMessages";
 import { useSummaryValues } from "./useSummaryValues";
 
 export const useCart = () => {
-  const { dispatch, cart } = useAppState();
+  const { dispatch, cartState, appDispatch } = useAppState();
+  const { addErrorMessage, addSuccessMessage } = useMessages();
 
   const { getTotalForCurrentItem, getSummaryValues } = useSummaryValues();
 
-  // TODO: this function is going to be removed when the app is hooked up with the redux toolkit
-  // Randomly add products & quantities to selectedProducts state from mock data
-  const getRandomProducts = async () => {
-    try {
-      const response = await mockRequest<ProductResponse>(data, 1000);
-
-      const shuffled = response.data.products.items
-        .slice()
-        .sort(() => 0.5 - Math.random());
-
-      // Get sub-array of first n elements after shuffled
-      const randomQuantity = Math.floor(Math.random() * 10) + 1;
-      let selected = shuffled.slice(0, randomQuantity);
-
-      const result: Array<CartProduct> = selected.map((item) => {
-        const randomQuantity = Math.floor(Math.random() * 10) + 1;
-        return { ...item, quantity: randomQuantity };
-      });
-
-      dispatch(set({ items: result }));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const addToCart = (product: Item) => {
     dispatch(add(product));
+    addSuccessMessage("Added to cart");
   };
 
   const removeFromCart = (id: number) => {
@@ -52,19 +34,32 @@ export const useCart = () => {
     dispatch(changeQuantity(params));
   };
 
+  const canCreateOrder = (cart: CartProducts) => {
+    const result = getSummaryValues(cart);
+    return result.totalItems > 0;
+  };
+
   const checkout = () => {
-    alert("Checkout in progress");
+    if (canCreateOrder(cartState)) {
+      appDispatch(postOrder());
+    } else {
+      addErrorMessage("Can't create order, add at least one product");
+    }
+  };
+
+  const restartCart = () => {
+    dispatch(restart());
   };
 
   return {
-    cart,
+    cartState,
     add,
     removeFromCart,
     changeProductQuantity,
-    getRandomProducts,
     getTotalForCurrentItem,
     getSummaryValues,
     checkout,
     addToCart,
+    restartCart,
   };
 };

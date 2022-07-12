@@ -1,4 +1,5 @@
 import { Bar, FlexContainer, Links } from "../styles/components/Header.styles";
+import { CART, HOME, LOGIN, PRODUCTS } from "../data/Constants";
 
 import React from "react";
 import { useLogin } from "../hooks/useLogin";
@@ -10,18 +11,18 @@ export const Header: React.FC = () => {
 
   return (
     <Bar className="topnav" id="myTopnav">
-      <Links to="/">
+      <Links to={HOME}>
         Wizestore{isLoggedIn && <span>- Hi, {currentUser?.username}</span>}
       </Links>
       <FlexContainer>
-        <Links to="/cart">Cart</Links>
-        <Links to="/products">Products</Links>
+        <Links to={CART}>Cart</Links>
+        <Links to={PRODUCTS}>Products</Links>
         {isLoggedIn ? (
-          <Links to="/login" onClick={logoutHandler}>
+          <Links to={LOGIN} onClick={logoutHandler}>
             Logout
           </Links>
         ) : (
-          <Links to="/login">Login</Links>
+          <Links to={LOGIN}>Login</Links>
         )}
       </FlexContainer>
     </Bar>

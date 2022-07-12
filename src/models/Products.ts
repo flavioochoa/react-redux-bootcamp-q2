@@ -26,7 +26,7 @@ export interface Data {
 }
 
 export interface ProductResponse {
-  data: Data;
+  items: Item[];
   maxItems: number;
   page: number;
   totalPages: number;

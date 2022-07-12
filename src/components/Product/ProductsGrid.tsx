@@ -6,13 +6,13 @@ import React from "react";
 import { useProductsWithEffects } from "../../hooks/useProductsWithEffects";
 
 export const ProductsGrid: React.FC = () => {
-  const { products } = useProductsWithEffects();
+  const { products, loading } = useProductsWithEffects();
 
-  if (!products) {
+  if (loading || !products) {
     return <Loading isLoading />;
   }
 
-  const { items } = products.data.products;
+  const { items } = products;
 
   return (
     <Box sx={{ flexGrow: 1 }} className="product-grid-container">

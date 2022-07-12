@@ -1,14 +1,13 @@
 import "./Login.css";
 
-import { Alert, Snackbar, TextField } from "@mui/material";
-
 import { Button } from "../Common/Button/Button";
 import React from "react";
+import { TextField } from "@mui/material";
 import { useLogin } from "../../hooks/useLogin";
 
 export const Login: React.FC = () => {
-  const { form, onChange, loginHandler, loginError, close, handleKeyDown } =
-    useLogin();
+  const { form, onChange, loginHandler, handleKeyDown } = useLogin();
+
   const { username, password, errors } = form;
 
   return (
@@ -54,14 +53,6 @@ export const Login: React.FC = () => {
           </div>
         </div>
       </div>
-      <Snackbar
-        open={loginError}
-        autoHideDuration={3000}
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-        onClose={close}
-      >
-        <Alert severity="error">Username or password invalid!</Alert>
-      </Snackbar>
     </div>
   );
 };

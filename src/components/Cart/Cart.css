@@ -16,11 +16,15 @@ hr {
   border: none;
 }
 
-.cart-no-items {
+.cart-center {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   margin: 20px;
   height: 86px;
+}
+
+.cart-fulfilled a {
+  color: black;
 }

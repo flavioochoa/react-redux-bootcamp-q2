@@ -21,3 +21,8 @@ export interface ChangeQuantityModel {
   id: number;
   quantity: number;
 }
+
+export interface OrderResponse {
+  order: number;
+  message: string;
+}

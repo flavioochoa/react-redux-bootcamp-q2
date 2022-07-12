@@ -1,3 +1,4 @@
+import { CART, HOME, LOGIN, ORDER_COMPLETE, PRODUCTS } from "../data/Constants";
 import {
   Redirect,
   Route,
@@ -9,6 +10,7 @@ import { CartPage } from "../pages/Cart";
 import { Header } from "../components/Header";
 import { HomePage } from "../pages/Home";
 import { LoginPage } from "../pages/Login";
+import { OrderFullfilled } from "../components/OrderFullfilled/OrderFullfilled";
 import { ProductsPage } from "../pages/Products";
 import React from "react";
 import { SecuredRoute } from "./SecureRoute";
@@ -29,17 +31,22 @@ export const AppRouter = () => {
     <Router>
       <Header />
       <Switch>
-        <Route exact path="/" render={() => renderSecuredRoute(HomePage)} />
+        <Route exact path={HOME} render={() => renderSecuredRoute(HomePage)} />
         <Route
           exact
-          path="/products"
+          path={PRODUCTS}
           render={() => renderSecuredRoute(ProductsPage)}
         />
-        <Route exact path="/cart" render={() => renderSecuredRoute(CartPage)} />
-        <Route path="/login">
+        <Route exact path={CART} render={() => renderSecuredRoute(CartPage)} />
+        <Route
+          exact
+          path={ORDER_COMPLETE}
+          render={() => renderSecuredRoute(OrderFullfilled)}
+        />
+        <Route path={LOGIN}>
           <LoginPage />
         </Route>
-        <Redirect to="/" />
+        <Redirect to={HOME} />
       </Switch>
     </Router>
   );
