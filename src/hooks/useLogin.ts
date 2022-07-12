@@ -55,7 +55,7 @@ export const useLogin = () => {
 
   const logoutHandler = () => {
     dispatch(logout());
-    auth0Logout();
+    auth0Logout({ returnTo: `${window.location.origin}${LOGIN}` });
     history.push(LOGIN);
   };
 
