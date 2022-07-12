@@ -3,12 +3,13 @@ import {
   ProductsState,
   RejectWithValue,
 } from "../../models/AppState";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { ProductResponse, UpdateFavorite } from "../../models/Products";
 
 import { AxiosError } from "axios";
 import AxiosInstance from "../../utils/AxiosInstance";
 import { BASE_URL } from "../../data/Constants";
-import { ProductResponse } from "../../models/Products";
+import { findIndexById } from "../../utils/utils";
 
 const initialState: ProductsState = {
   products: null,
@@ -40,7 +41,18 @@ export const fetchProducts = createAsyncThunk<
 export const productSlice = createSlice({
   name: "productReducer",
   initialState,
-  reducers: {},
+  reducers: {
+    updateFavorite: (state, action: PayloadAction<UpdateFavorite>) => {
+      const { items } = state.products;
+      const { isFavorite, id } = action.payload;
+
+      const index = findIndexById(items, id);
+
+      if (index !== -1) {
+        items[index].isFavorite = isFavorite;
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchProducts.pending, (state, action) => {
       state.loading = true;
@@ -55,5 +67,7 @@ export const productSlice = createSlice({
     });
   },
 });
+
+export const { updateFavorite } = productSlice.actions;
 
 export default productSlice.reducer;

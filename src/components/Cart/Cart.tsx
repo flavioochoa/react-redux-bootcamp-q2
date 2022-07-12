@@ -1,9 +1,10 @@
 import "./Cart.css";
 
+import { ORDER_COMPLETE, PRODUCTS } from "../../data/Constants";
 import React, { useEffect } from "react";
 
 import { CartSummary } from "./CartSummary/CartSummary";
-import { ORDER_COMPLETE } from "../../data/Constants";
+import { MessageLink } from "../Common/MessageLink/MessageLink";
 import { OrderStatus } from "../../models/AppState";
 import { Table } from "../Common/Table/Table";
 import { columns } from "./CartTableConfig";
@@ -27,9 +28,11 @@ export const Cart: React.FC = () => {
 
   if (!items.length) {
     return (
-      <div className="cart-center">
-        <span>There's no items in your cart :(</span>
-      </div>
+      <MessageLink
+        message="There's no items in your cart :("
+        path={PRODUCTS}
+        linkLabel="Click here to add some products!"
+      />
     );
   }
 

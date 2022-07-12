@@ -1,4 +1,11 @@
-import { CART, HOME, LOGIN, ORDER_COMPLETE, PRODUCTS } from "../data/Constants";
+import {
+  CART,
+  FAVORITES,
+  HOME,
+  LOGIN,
+  ORDER_COMPLETE,
+  PRODUCTS,
+} from "../data/Constants";
 import {
   Redirect,
   Route,
@@ -7,10 +14,11 @@ import {
 } from "react-router-dom";
 
 import { CartPage } from "../pages/Cart";
+import { FavoritesPage } from "../pages/Favorites";
 import { Header } from "../components/Header";
 import { HomePage } from "../pages/Home";
 import { LoginPage } from "../pages/Login";
-import { OrderFullfilled } from "../components/OrderFullfilled/OrderFullfilled";
+import { OrderFullfilledPage } from "../pages/OrderFullfilled";
 import { ProductsPage } from "../pages/Products";
 import React from "react";
 import { SecuredRoute } from "./SecureRoute";
@@ -41,7 +49,12 @@ export const AppRouter = () => {
         <Route
           exact
           path={ORDER_COMPLETE}
-          render={() => renderSecuredRoute(OrderFullfilled)}
+          render={() => renderSecuredRoute(OrderFullfilledPage)}
+        />
+        <Route
+          exact
+          path={FAVORITES}
+          render={() => renderSecuredRoute(FavoritesPage)}
         />
         <Route path={LOGIN}>
           <LoginPage />

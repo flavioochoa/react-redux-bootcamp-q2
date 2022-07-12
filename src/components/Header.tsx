@@ -1,5 +1,5 @@
 import { Bar, FlexContainer, Links } from "../styles/components/Header.styles";
-import { CART, HOME, LOGIN, PRODUCTS } from "../data/Constants";
+import { CART, FAVORITES, HOME, LOGIN, PRODUCTS } from "../data/Constants";
 
 import React from "react";
 import { useLogin } from "../hooks/useLogin";
@@ -15,8 +15,10 @@ export const Header: React.FC = () => {
         Wizestore{isLoggedIn && <span>- Hi, {currentUser?.username}</span>}
       </Links>
       <FlexContainer>
-        <Links to={CART}>Cart</Links>
+        <Links to={FAVORITES}>Favorites</Links>
         <Links to={PRODUCTS}>Products</Links>
+        <Links to={CART}>Cart</Links>
+
         {isLoggedIn ? (
           <Links to={LOGIN} onClick={logoutHandler}>
             Logout

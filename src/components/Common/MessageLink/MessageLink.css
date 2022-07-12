@@ -1,0 +1,12 @@
+.message-link-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px;
+  height: 86px;
+}
+
+.message-link a {
+  color: black;
+}

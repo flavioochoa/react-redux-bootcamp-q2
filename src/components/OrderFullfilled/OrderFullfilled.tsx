@@ -1,12 +1,13 @@
-import { Links } from "../../styles/components/Header.styles";
+import { MessageLink } from "../Common/MessageLink/MessageLink";
 import { PRODUCTS } from "../../data/Constants";
 import React from "react";
 
 export const OrderFullfilled: React.FC = () => {
   return (
-    <div className="cart-center cart-fulfilled">
-      <span>Order created successfully!</span>
-      <Links to={PRODUCTS}>Click here to keep shoping</Links>
-    </div>
+    <MessageLink
+      message="Order created successfully!"
+      path={PRODUCTS}
+      linkLabel="Click here to keep shoping!"
+    />
   );
 };

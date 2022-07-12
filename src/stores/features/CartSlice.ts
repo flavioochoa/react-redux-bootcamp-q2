@@ -73,7 +73,8 @@ export const cartSlice = createSlice({
 
       if (index !== -1) {
         items.splice(index, 1);
-        if (items.length - 1 <= 0) {
+
+        if (!items.length) {
           state.orderStatus = OrderStatus.NoItems;
         }
       }

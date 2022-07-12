@@ -15,16 +15,3 @@ hr {
   background-color: rgb(255 193 193);
   border: none;
 }
-
-.cart-center {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  margin: 20px;
-  height: 86px;
-}
-
-.cart-fulfilled a {
-  color: black;
-}
