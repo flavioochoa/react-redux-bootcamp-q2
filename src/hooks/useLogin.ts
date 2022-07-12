@@ -1,15 +1,25 @@
 import { GenericObject, LoginForm, UserModel } from "../models/LoginForm";
+import { HOME, LOGIN } from "../data/Constants";
 import { login, logout } from "../stores/features/LoginSlice";
 
-import { LOGIN } from "../data/Constants";
 import loginApi from "../utils/loginApi";
 import { useAppState } from "./useAppState";
+import { useAuth0 } from "@auth0/auth0-react";
 import { useHistory } from "react-router-dom";
 import { useMessages } from "../components/Common/Messages/useMessages";
 import { useState } from "react";
 
 export const useLogin = () => {
   const { loginState, dispatch } = useAppState();
+
+  const {
+    user,
+    isAuthenticated,
+    logout: auth0Logout,
+    loginWithRedirect: auth0Login,
+  } = useAuth0();
+
+  const history = useHistory();
 
   const { addErrorMessage, addSuccessMessage } = useMessages();
 
@@ -18,8 +28,6 @@ export const useLogin = () => {
     password: "",
     errors: null,
   });
-
-  const history = useHistory();
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const key = e.target.dataset.key;
@@ -45,16 +53,19 @@ export const useLogin = () => {
     return Object.keys(error).length ? error : null;
   };
 
-  const loginAction = (user: UserModel) => {
-    dispatch(login(user));
-  };
-
   const logoutHandler = () => {
     dispatch(logout());
+    auth0Logout();
     history.push(LOGIN);
   };
 
-  const loginHandler = async () => {
+  const redirectAfterLogin = (response: UserModel) => {
+    dispatch(login(response));
+    history.push(HOME);
+    addSuccessMessage(`Welcome ${response.username}`);
+  };
+
+  const loginHandlerWithEmailAndPassword = async () => {
     const errors = validateFields(form);
     if (!errors) {
       setForm({ ...form, errors });
@@ -62,9 +73,7 @@ export const useLogin = () => {
 
       try {
         const response = await loginApi(username, password);
-        loginAction(response);
-        history.push("/home");
-        addSuccessMessage(`Welcome ${response.username}`);
+        redirectAfterLogin(response);
       } catch (error) {
         console.log(error);
         addErrorMessage("Username or password invalid!");
@@ -76,16 +85,20 @@ export const useLogin = () => {
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
-      loginHandler();
+      loginHandlerWithEmailAndPassword();
     }
   };
 
   return {
     form,
     onChange,
-    loginHandler,
+    loginHandlerWithEmailAndPassword,
     loginState,
     handleKeyDown,
     logoutHandler,
+    isAuthenticated,
+    user,
+    redirectAfterLogin,
+    auth0Login,
   };
 };

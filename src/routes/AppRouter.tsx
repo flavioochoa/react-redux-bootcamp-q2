@@ -1,4 +1,5 @@
 import {
+  CALLBACK,
   CART,
   FAVORITES,
   HOME,
@@ -14,6 +15,7 @@ import {
   Switch,
 } from "react-router-dom";
 
+import { Auth0Callback } from "../components/Auth0Callback/Auth0Callback";
 import { CartPage } from "../pages/Cart";
 import { FavoritesPage } from "../pages/Favorites";
 import { Header } from "../components/Header";
@@ -63,9 +65,15 @@ export const AppRouter = () => {
           path={PRODUCT_DETAILS}
           render={() => renderSecuredRoute(ProductDetailsPage)}
         />
+
+        <Route path={CALLBACK}>
+          <Auth0Callback />
+        </Route>
+
         <Route path={LOGIN}>
           <LoginPage />
         </Route>
+
         <Redirect to={HOME} />
       </Switch>
     </Router>

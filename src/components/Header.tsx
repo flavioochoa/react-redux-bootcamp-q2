@@ -10,11 +10,17 @@ export const Header: React.FC = () => {
 
   const { isLoggedIn, currentUser } = loginState;
 
+  if (!isLoggedIn) {
+    return (
+      <Bar className="topnav" id="myTopnav">
+        <Links to={HOME}>Wizestore</Links>
+      </Bar>
+    );
+  }
+
   return (
     <Bar className="topnav" id="myTopnav">
-      <Links to={HOME}>
-        Wizestore{isLoggedIn && <span>- Hi, {currentUser?.username}</span>}
-      </Links>
+      <Links to={HOME}>Wizestore Hi, {currentUser?.username}</Links>
       <FlexContainer>
         <ProductSearchBar />
 
@@ -22,13 +28,9 @@ export const Header: React.FC = () => {
         <Links to={PRODUCTS}>Products</Links>
         <Links to={CART}>Cart</Links>
 
-        {isLoggedIn ? (
-          <Links to={LOGIN} onClick={logoutHandler}>
-            Logout
-          </Links>
-        ) : (
-          <Links to={LOGIN}>Login</Links>
-        )}
+        <Links to={LOGIN} onClick={logoutHandler}>
+          Logout
+        </Links>
       </FlexContainer>
     </Bar>
   );

@@ -6,7 +6,13 @@ import { TextField } from "@mui/material";
 import { useLogin } from "../../hooks/useLogin";
 
 export const Login: React.FC = () => {
-  const { form, onChange, loginHandler, handleKeyDown } = useLogin();
+  const {
+    form,
+    onChange,
+    loginHandlerWithEmailAndPassword,
+    handleKeyDown,
+    auth0Login,
+  } = useLogin();
 
   const { username, password, errors } = form;
 
@@ -44,11 +50,16 @@ export const Login: React.FC = () => {
               helperText={errors?.password}
             />
           </div>
-          <div className="login-button padding-10">
+          <div className="login-buttons padding-10">
             <Button
               label="Login"
-              onClick={loginHandler}
-              className="width-100"
+              onClick={loginHandlerWithEmailAndPassword}
+              className="width-100 buttons"
+            />
+            <Button
+              label="Login With Auth0"
+              onClick={auth0Login}
+              className="width-100 buttons"
             />
           </div>
         </div>

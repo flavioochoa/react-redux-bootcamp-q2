@@ -12,7 +12,9 @@ export const useProducts = () => {
 
   const fetch = async () => {
     try {
-      appDispatch(fetchProducts());
+      if (!products) {
+        appDispatch(fetchProducts());
+      }
     } catch (error) {
       console.log(error);
       addErrorMessage(JSON.stringify(error));

@@ -22,3 +22,12 @@
 .width-100 {
   width: 100%;
 }
+
+.login-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.login-buttons > .buttons {
+  margin: 5px;
+}
