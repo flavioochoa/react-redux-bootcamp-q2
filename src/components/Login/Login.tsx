@@ -1,14 +1,19 @@
 import "./Login.css";
 
-import { Alert, Snackbar, TextField } from "@mui/material";
-
 import { Button } from "../Common/Button/Button";
 import React from "react";
+import { TextField } from "@mui/material";
 import { useLogin } from "../../hooks/useLogin";
 
 export const Login: React.FC = () => {
-  const { form, onChange, loginHandler, loginError, close, handleKeyDown } =
-    useLogin();
+  const {
+    form,
+    onChange,
+    loginHandlerWithEmailAndPassword,
+    handleKeyDown,
+    auth0Login,
+  } = useLogin();
+
   const { username, password, errors } = form;
 
   return (
@@ -45,23 +50,20 @@ export const Login: React.FC = () => {
               helperText={errors?.password}
             />
           </div>
-          <div className="login-button padding-10">
+          <div className="login-buttons padding-10">
             <Button
               label="Login"
-              onClick={loginHandler}
-              className="width-100"
+              onClick={loginHandlerWithEmailAndPassword}
+              className="width-100 buttons"
+            />
+            <Button
+              label="Login With Auth0"
+              onClick={auth0Login}
+              className="width-100 buttons"
             />
           </div>
         </div>
       </div>
-      <Snackbar
-        open={loginError}
-        autoHideDuration={3000}
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-        onClose={close}
-      >
-        <Alert severity="error">Username or password invalid!</Alert>
-      </Snackbar>
     </div>
   );
 };

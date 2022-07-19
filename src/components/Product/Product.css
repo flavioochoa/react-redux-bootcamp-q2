@@ -6,7 +6,6 @@
 }
 
 .product-name {
-  font-weight: bold;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: initial;
@@ -33,7 +32,6 @@
 
 .product-category {
   font-size: 15px;
-  font-weight: bold;
 }
 
 .add-to-cart-button-container {
@@ -44,10 +42,20 @@
 }
 
 .add-to-cart-button-container .MuiButton-root {
-  padding: 5px;
   width: 90%;
+  height: 30px;
 }
 
 .product-grid-container {
   padding: 15px;
+  position: relative;
+}
+
+.product-container-favorite {
+  cursor: pointer;
+  color: #1875d2;
+  position: absolute;
+  top: 0px;
+  right: 10px;
+  margin: 5px;
 }

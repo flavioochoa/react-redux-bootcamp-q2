@@ -1,20 +1,37 @@
-import { ProductResponse } from "../models/Products";
-import data from "../utils/stub/products.stub.json";
-import { mockRequest } from "../utils/mockRequest";
-import { set } from "../stores/features/ProductSlice";
+import { Item } from "../models/Products";
+import { fetchProducts } from "../stores/features/ProductSlice";
 import { useAppState } from "./useAppState";
+import { useMessages } from "../components/Common/Messages/useMessages";
 
 export const useProducts = () => {
-  const { products, dispatch } = useAppState();
+  const { productsState, appDispatch } = useAppState();
+
+  const { products, loading } = productsState;
+
+  const { addErrorMessage } = useMessages();
 
   const fetch = async () => {
     try {
-      const response = await mockRequest<ProductResponse>(data, 1000);
-      dispatch(set(response));
+      if (!products) {
+        appDispatch(fetchProducts());
+      }
     } catch (error) {
       console.log(error);
+      addErrorMessage(JSON.stringify(error));
     }
   };
 
-  return { fetch, products };
+  const findProductById = (id: number): Item | undefined => {
+    if (!products) {
+      return undefined;
+    }
+
+    const result = products.items.find((item) => {
+      return item.id === id;
+    });
+
+    return result;
+  };
+
+  return { fetch, products, loading, findProductById };
 };

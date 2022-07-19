@@ -5,6 +5,7 @@ export interface Item {
   description: string;
   images: string[];
   categories: string[];
+  isFavorite?: boolean;
 }
 
 export interface Products {
@@ -26,10 +27,15 @@ export interface Data {
 }
 
 export interface ProductResponse {
-  data: Data;
+  items: Item[];
   maxItems: number;
   page: number;
   totalPages: number;
   numOfResults: number;
   totalRecords: number;
+}
+
+export interface UpdateFavorite {
+  isFavorite: boolean;
+  id: number;
 }

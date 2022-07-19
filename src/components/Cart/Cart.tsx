@@ -1,21 +1,38 @@
 import "./Cart.css";
 
-import { Button } from "../Common/Button/Button";
+import { ORDER_COMPLETE, PRODUCTS } from "../../data/Constants";
+import React, { useEffect } from "react";
+
 import { CartSummary } from "./CartSummary/CartSummary";
-import React from "react";
+import { MessageLink } from "../Common/MessageLink/MessageLink";
+import { OrderStatus } from "../../models/AppState";
 import { Table } from "../Common/Table/Table";
 import { columns } from "./CartTableConfig";
 import { useCart } from "../../hooks/useCart";
+import { useHistory } from "react-router-dom";
 
 export const Cart: React.FC = () => {
-  const { cart, getRandomProducts } = useCart();
+  const history = useHistory();
 
-  if (!cart.items.length) {
+  const { cartState, restartCart } = useCart();
+
+  const { items, orderStatus } = cartState;
+
+  useEffect(() => {
+    if (orderStatus === OrderStatus.Fulfilled) {
+      restartCart();
+      history.push(ORDER_COMPLETE);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [orderStatus]);
+
+  if (!items.length) {
     return (
-      <div className="cart-no-items">
-        <span>There's no items in your cart :(</span>
-        <Button label="Add random products" onClick={getRandomProducts} />
-      </div>
+      <MessageLink
+        message="There's no items in your cart :("
+        path={PRODUCTS}
+        linkLabel="Click here to add some products!"
+      />
     );
   }
 
@@ -27,9 +44,9 @@ export const Cart: React.FC = () => {
         </div>
         <hr />
         <div className="cart-products-summary-container">
-          <Table config={{ data: cart.items, columns }} />
+          <Table config={{ data: items, columns }} />
 
-          <CartSummary cart={cart} />
+          <CartSummary cart={cartState} />
         </div>
       </div>
     </div>

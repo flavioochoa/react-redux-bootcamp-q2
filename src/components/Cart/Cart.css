@@ -15,12 +15,3 @@ hr {
   background-color: rgb(255 193 193);
   border: none;
 }
-
-.cart-no-items {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  margin: 20px;
-  height: 86px;
-}

@@ -1,27 +1,33 @@
 import { GenericObject, LoginForm, UserModel } from "../models/LoginForm";
+import { HOME, LOGIN } from "../data/Constants";
 import { login, logout } from "../stores/features/LoginSlice";
 
 import loginApi from "../utils/loginApi";
 import { useAppState } from "./useAppState";
+import { useAuth0 } from "@auth0/auth0-react";
 import { useHistory } from "react-router-dom";
+import { useMessages } from "../components/Common/Messages/useMessages";
 import { useState } from "react";
 
 export const useLogin = () => {
   const { loginState, dispatch } = useAppState();
+
+  const {
+    user,
+    isAuthenticated,
+    logout: auth0Logout,
+    loginWithRedirect: auth0Login,
+  } = useAuth0();
+
+  const history = useHistory();
+
+  const { addErrorMessage, addSuccessMessage } = useMessages();
 
   const [form, setForm] = useState<LoginForm>({
     username: "",
     password: "",
     errors: null,
   });
-
-  const [loginError, setLoginError] = useState<boolean>(false);
-
-  const history = useHistory();
-
-  const close = () => {
-    setLoginError(false);
-  };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const key = e.target.dataset.key;
@@ -47,16 +53,19 @@ export const useLogin = () => {
     return Object.keys(error).length ? error : null;
   };
 
-  const loginAction = (user: UserModel) => {
-    dispatch(login(user));
-  };
-
   const logoutHandler = () => {
     dispatch(logout());
-    history.push("/login");
+    auth0Logout({ returnTo: `${window.location.origin}${LOGIN}` });
+    history.push(LOGIN);
   };
 
-  const loginHandler = async () => {
+  const redirectAfterLogin = (response: UserModel) => {
+    dispatch(login(response));
+    history.push(HOME);
+    addSuccessMessage(`Welcome ${response.username}`);
+  };
+
+  const loginHandlerWithEmailAndPassword = async () => {
     const errors = validateFields(form);
     if (!errors) {
       setForm({ ...form, errors });
@@ -64,11 +73,10 @@ export const useLogin = () => {
 
       try {
         const response = await loginApi(username, password);
-        loginAction(response);
-        history.push("/home");
+        redirectAfterLogin(response);
       } catch (error) {
         console.log(error);
-        setLoginError(true);
+        addErrorMessage("Username or password invalid!");
       }
     } else {
       setForm({ ...form, errors });
@@ -77,18 +85,20 @@ export const useLogin = () => {
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
-      loginHandler();
+      loginHandlerWithEmailAndPassword();
     }
   };
 
   return {
     form,
     onChange,
-    loginHandler,
-    loginError,
-    close,
+    loginHandlerWithEmailAndPassword,
     loginState,
     handleKeyDown,
     logoutHandler,
+    isAuthenticated,
+    user,
+    redirectAfterLogin,
+    auth0Login,
   };
 };
